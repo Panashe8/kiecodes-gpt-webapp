@@ -1,3 +1,18 @@
+
+/**
+ * ChatInput Component
+ * ---------------------
+ * This component creates a chat input field with a send button.
+ * It allows users to type a message and send it.
+ * - Uses the 'useState' hook for state management of the message input.
+ * - The 'MdSend' icon from 'react-icons' is used for the send button.
+ * - Props:
+ *   - 'disabled': Boolean to enable/disable the input and button.
+ *   - 'onSend': Function to call when the message is sent.
+ * - The component utilizes Tailwind CSS for styling.
+ * - The form has an 'onSubmit' handler to process message sending,
+ *   prevent default form behavior, call 'onSend' with the message, and clear the input.
+ */
 import {MdSend} from "react-icons/md";
 import {useState} from "react";
 
@@ -16,7 +31,7 @@ export default function ChatInput({disabled, onSend}) {
             >
                 <input
                     name="message"
-                    placeholder="What can I do for you today, Coder?"
+                    placeholder="Welcome to Protea AI What can I do for you today?"
                     className={
                         "w-full " +
                         "bg-slate-700 " +

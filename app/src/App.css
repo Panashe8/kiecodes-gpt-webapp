@@ -1,3 +1,36 @@
+/**
+ * App.css (Styling for the React Application)
+ * --------------------------------------------
+ * This CSS file contains styles specific to the React application.
+ *
+ * Styles Overview:
+ * 1. .App: 
+ *    - Centers text within the main App component.
+ *
+ * 2. .markdown a:
+ *    - Styles anchor tags within elements having the 'markdown' class.
+ *    - Sets link color using a theming function for consistency.
+ *
+ * 3. .markdown th:
+ *    - Applies styles to table header cells in markdown-styled content.
+ *    - Includes text alignment, border, and padding.
+ *
+ * 4. .markdown table:
+ *    - Defines the overall look of tables within markdown sections.
+ *    - Includes border styling, border collapse, radius, and margin settings.
+ *
+ * 5. .markdown table td:
+ *    - Styles for table data cells in markdown content.
+ *    - Sets borders and padding for individual cells.
+ *
+ * 6. .markdown ul, .markdown ol:
+ *    - Targets unordered and ordered lists in markdown sections.
+ *    - Sets list style type and margin.
+ *
+ * Notes:
+ * - The use of the 'theme()' function suggests integration with a CSS-in-JS library or preprocessor for theming.
+ * - These styles are primarily focused on elements that render markdown content, ensuring a consistent and readable format.
+ */
 .App {
   text-align: center;
 }

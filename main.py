@@ -1,3 +1,7 @@
+import logging
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
 from typing import List, Optional
 
 from fastapi import FastAPI
@@ -6,6 +10,7 @@ from openai.types.beta.threads.run import RequiredAction, LastError
 from openai.types.beta.threads.run_submit_tool_outputs_params import ToolOutput
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
+
 
 app = FastAPI()
 app.add_middleware(
@@ -19,9 +24,9 @@ app.add_middleware(
 )
 
 client = AsyncOpenAI(
-    api_key="<YOUR-API-KEY-HERE>",
+    api_key="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",
 )
-assistant_id = "<YOUR-ASSISTANT-ID-HERE>"
+assistant_id = "asst_V8MP3FdSFX1VtUJNn1t6zx2X"
 run_finished_states = ["completed", "failed", "cancelled", "expired", "requires_action"]
 
 
@@ -73,21 +78,48 @@ async def post_new():
         last_error=run.last_error
     )
 
-
 @app.get("/api/threads/{thread_id}/runs/{run_id}")
 async def get_run(thread_id: str, run_id: str):
-    run = await client.beta.threads.runs.retrieve(
-        thread_id=thread_id,
-        run_id=run_id
-    )
+    logging.info(f"Starting to retrieve run for thread_id: {thread_id} and run_id: {run_id}")
 
-    return RunStatus(
-        run_id=run.id,
-        thread_id=thread_id,
-        status=run.status,
-        required_action=run.required_action,
-        last_error=run.last_error
-    )
+    try:
+        logging.info("Attempting to call OpenAI API to retrieve run details.")
+        run = await client.beta.threads.runs.retrieve(
+            thread_id=thread_id,
+            run_id=run_id
+        )
+        logging.info("Successfully retrieved run details from OpenAI API.")
+
+        logging.info("Preparing response object.")
+        response = RunStatus(
+            run_id=run.id,
+            thread_id=thread_id,
+            status=run.status,
+            required_action=run.required_action,
+            last_error=run.last_error
+        )
+        logging.info("Response object prepared. Sending response.")
+
+        return response
+
+    except Exception as e:
+        error_message = f"Error retrieving run: {e}"
+        logging.error(error_message)
+        raise HTTPException(status_code=500, detail=error_message)
+# @app.get("/api/threads/{thread_id}/runs/{run_id}")
+# async def get_run(thread_id: str, run_id: str):
+#     run = await client.beta.threads.runs.retrieve(
+#         thread_id=thread_id,
+#         run_id=run_id
+#     )
+
+#     return RunStatus(
+#         run_id=run.id,
+#         thread_id=thread_id,
+#         status=run.status,
+#         required_action=run.required_action,
+#         last_error=run.last_error
+#     )
 
 
 @app.post("/api/threads/{thread_id}/runs/{run_id}/tool")

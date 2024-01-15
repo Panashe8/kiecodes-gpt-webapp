@@ -1,3 +1,28 @@
+/**
+ * Index.css (Global Stylesheet for the React Application)
+ * -------------------------------------------------------
+ * - Integrates Tailwind CSS for utility-first styling.
+ * - Sets foundational styles for the entire application.
+ *
+ * Key Features:
+ * 1. Tailwind CSS Integration:
+ *    - Imports Tailwind's base, components, and utility layers.
+ *    - Enables the use of Tailwind utility classes throughout the application.
+ *
+ * 2. Body Custom Styles:
+ *    - Sets a global margin of 0 to override default browser styling.
+ *    - Defines a system-based font stack for better typography across platforms.
+ *    - Includes font-smoothing properties for enhanced text clarity on macOS.
+ *    - Uses Tailwind's `theme()` function for consistent theming, specifically for the background color.
+ *
+ * 3. Code Element Styling:
+ *    - Customizes the font family for `<code>` elements to improve legibility of code snippets.
+ *    - Prioritizes fonts commonly used in coding environments.
+ *
+ * Usage:
+ * - This file acts as the starting point for global styles in the React application.
+ * - Tailwind CSS classes can be used alongside these base styles for more specific component-level styling.
+ */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

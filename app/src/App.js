@@ -1,3 +1,32 @@
+/**
+ * App Component (Main Component)
+ * -------------------------------
+ * This is the main component of the React chat application.
+ * 
+ * Functionalities:
+ * - Manages the overall state and behavior of the chat application.
+ * - Orchestrates sub-components such as Header, ChatInput, ChatMessage, etc.
+ * 
+ * State Management:
+ * - Utilizes React's useState hook to manage the 'run' state of the chat session.
+ * 
+ * Custom Hooks:
+ * - useThread: Manages the thread of messages and actions.
+ * - useRunPolling: Updates the 'run' state periodically.
+ * - useRunRequiredActionsProcessing: Handles actions required for the current run.
+ * - useRunStatus: Retrieves the status and processing state of the run.
+ * 
+ * Rendering:
+ * - Processes and displays messages using ChatVideoEmbedding or ChatMessage components.
+ * - Structured layout with Header, scrollable message area, and ChatInput field.
+ * - Implements conditional rendering for status and loading indicators.
+ * 
+ * Key Interactions:
+ * - ChatInput's onSend: Invokes postMessage service and updates the 'run' state.
+ * 
+ * Styles:
+ * - Uses Tailwind CSS for styling the application layout and components.
+ */
 import React, {useState} from 'react';
 import './App.css';
 import Header from "./components/Header";

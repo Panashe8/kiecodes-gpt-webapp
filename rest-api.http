@@ -2,10 +2,9 @@
 POST http://localhost:8000/api/new
 Accept: application/json
 
-> {%
-client.global.set("thread_id", response.body.thread_id)
-client.global.set("run_id", response.body.run_id)
- %}
+#Manual step substitute in thread id and run id from Request 1: 
+@thread_id = thread_oDjXfAROCT2BNxbs59S3UzhO
+@run_id = run_j2yCYuvPTFSxWgBFhwsq68g2
 
 ### Retrieve Thread
 GET http://localhost:8000/api/threads/{{thread_id}}
@@ -20,13 +19,8 @@ POST http://localhost:8000/api/threads/{{thread_id}}
 Accept: application/json
 Content-Type: application/json
 
-{ "content": "Does kie have video with Phillips Hue?" }
+{ "content": "What products doees Protea AI have?" }
 
-
-> {%
-client.global.set("thread_id", response.body.thread_id)
-client.global.set("run_id", response.body.run_id)
- %}
 
 ### Submit Tool Output
 POST http://localhost:8000/api/threads/{{thread_id}}/runs/{{run_id}}/tool
