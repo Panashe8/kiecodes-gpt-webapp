@@ -1,4 +1,9 @@
+#Instructions to run the server
+#Start back end server in terminal run : uvicorn main:app --reload --host 0.0.0.0 --port 8000
+
+
 import logging
+import os
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
@@ -10,23 +15,26 @@ from openai.types.beta.threads.run import RequiredAction, LastError
 from openai.types.beta.threads.run_submit_tool_outputs_params import ToolOutput
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
+load_dotenv()
 
+#Fetch frontend URL enviroment varible or use localhost:3000
+frontend_url = os.getenv('FRONTEND_URL', 'http://localhost:3000').split(',')
 
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",  # used to run with react server
-    ],
+    allow_origins=frontend_url,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 client = AsyncOpenAI(
-    api_key="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",
+    api_key=os.getenv('OPENAI_API_KEY')
+,
 )
-assistant_id = "asst_V8MP3FdSFX1VtUJNn1t6zx2X"
+assistant_id = os.getenv('OPENAI_ASSISTANT_ID')
 run_finished_states = ["completed", "failed", "cancelled", "expired", "requires_action"]
 
 
@@ -106,21 +114,6 @@ async def get_run(thread_id: str, run_id: str):
         error_message = f"Error retrieving run: {e}"
         logging.error(error_message)
         raise HTTPException(status_code=500, detail=error_message)
-# @app.get("/api/threads/{thread_id}/runs/{run_id}")
-# async def get_run(thread_id: str, run_id: str):
-#     run = await client.beta.threads.runs.retrieve(
-#         thread_id=thread_id,
-#         run_id=run_id
-#     )
-
-#     return RunStatus(
-#         run_id=run.id,
-#         thread_id=thread_id,
-#         status=run.status,
-#         required_action=run.required_action,
-#         last_error=run.last_error
-#     )
-
 
 @app.post("/api/threads/{thread_id}/runs/{run_id}/tool")
 async def post_tool(thread_id: str, run_id: str, tool_outputs: List[ToolOutput]):

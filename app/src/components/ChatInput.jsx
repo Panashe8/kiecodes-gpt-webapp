@@ -12,6 +12,7 @@
  * - The component utilizes Tailwind CSS for styling.
  * - The form has an 'onSubmit' handler to process message sending,
  *   prevent default form behavior, call 'onSend' with the message, and clear the input.
+ * Placeholder = Contains default message
  */
 import {MdSend} from "react-icons/md";
 import {useState} from "react";
@@ -31,7 +32,7 @@ export default function ChatInput({disabled, onSend}) {
             >
                 <input
                     name="message"
-                    placeholder="Welcome to Protea AI What can I do for you today?"
+                    placeholder="Message"
                     className={
                         "w-full " +
                         "bg-slate-700 " +
@@ -48,7 +49,7 @@ export default function ChatInput({disabled, onSend}) {
                         "font-bold " +
                         "py-2 px-4 " +
                         "rounded " +
-                        "hover:bg-pink-400 " +
+                        "hover:bg-green-800 " +
                         "disabled:bg-slate-600 " +
                         "disabled:text-slate-400"
                     }
